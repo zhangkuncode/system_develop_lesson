@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<title></title>
+		<script type="text/javascript">
+			function preImg(sourceId, targetId) {
+				var url = getFileUrl(sourceId);
+				var imgPre = document.getElementById(targetId);
+				imgPre.src = url;
+			}
+
+			function getFileUrl(sourceId) {
+				var url;
+				if (navigator.userAgent.indexOf("MSIE") >= 1) { // IE
+					url = document.getElementById(sourceId).value;
+				} else if (navigator.userAgent.indexOf("Firefox") > 0) { // Firefox
+					url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+				} else if (navigator.userAgent.indexOf("Chrome") > 0) { // Chrome
+					url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+				}
+				return url;
+			}
+
+			function xxxx() {
+                var  myselect=document.getElementById("sid");
+				var index=myselect.selectedIndex ;
+				var grade = myselect.options[index].text;
+				//alert(grade);
+				var obj = document.getElementById("desc");
+				if(grade == "---choose---"){
+					obj.innerText = "describtion of algorithm";
+				}
+				if(grade == "gamma"){
+					obj.innerText = "Gamma transform of image";
+				}
+				if(grade == "segment"){
+					obj.innerText = "Watershed Algorithm";
+				}
+				if(grade == "distance_field"){
+					obj.innerText = "a gridded structure where each cell in the grid represents the shortest distance from that cell to a cell with some other property";
+				}
+				if(grade == "binary"){
+					obj.innerText = "Adaptive thresholding";
+				}
+			}
+		</script>
+
+	</head>
+
+	<body>
+		<form action="http://129.211.79.59:8090/set_book" enctype='multipart/form-data' method="post">
+			<input type="file" name="imgOne" id="imgOne" onchange="preImg(this.id,'imgPre');" />
+			<img id="imgPre" src="" width="300px" height="300px" style="display: block;" />
+			<select id="sid" name="ssvalue" onchange="xxxx()">
+				<option value="0">---choose---</option>
+				<option value="1">gamma</option>
+				<option value="2">segment</option>
+				<option value="3">distance_field</option>
+				<option value="4">binary</option>
+			</select>
+			<button type="button" id="btn" onclick="submit()"> submit </button>
+		</form>
+
+		<p id='desc'>algorithm description</p>
+
+
+	</body>
+</html>
+
